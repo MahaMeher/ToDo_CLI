@@ -17,6 +17,12 @@ To run the application:
 python -m src.todo_app.main
 ```
 
+Using UV (recommended):
+
+```bash
+uv run python -m src.todo_app.main
+```
+
 Or if installed as a package:
 
 ```bash
