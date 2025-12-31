@@ -16,8 +16,8 @@ class TestCLIIntegration:
         """Test adding a task through the CLI interface successfully."""
         cli = CLIInterface()
 
-        # Mock user inputs: title, description
-        inputs = iter(["Test Task Title", "Test Task Description"])
+        # Mock user inputs: title, description, priority (skip), tags (skip), due date (skip)
+        inputs = iter(["Test Task Title", "Test Task Description", "", "", ""])  # Empty strings to skip priority, tags, due date
 
         def mock_input(prompt):
             return next(inputs)
@@ -40,8 +40,8 @@ class TestCLIIntegration:
         """Test CLI handles empty title input by asking again."""
         cli = CLIInterface()
 
-        # Mock user inputs: empty title, then valid title, then description
-        inputs = iter(["", "Valid Task Title", "Task Description"])
+        # Mock user inputs: empty title, then valid title, then description, then priority (skip), tags (skip), due date (skip)
+        inputs = iter(["", "Valid Task Title", "Task Description", "", "", ""])  # Empty strings to skip priority, tags, due date
 
         def mock_input(prompt):
             return next(inputs)
@@ -61,9 +61,9 @@ class TestCLIIntegration:
         """Test CLI validates long title."""
         cli = CLIInterface()
 
-        # Mock user inputs: long title, then description
+        # Mock user inputs: long title, then description, then priority (skip), tags (skip), due date (skip)
         long_title = "A" * 101  # Too long
-        inputs = iter([long_title, "Task Description"])
+        inputs = iter([long_title, "Task Description", "", "", ""])  # Empty strings to skip priority, tags, due date
 
         def mock_input(prompt):
             return next(inputs)
@@ -121,8 +121,8 @@ class TestCLIIntegration:
         # Add a task first
         original_task = cli.task_service.add_task("Original Title", "Original Description")
 
-        # Mock user inputs: task ID, new title, new description
-        inputs = iter([str(original_task.id), "Updated Title", "Updated Description"])
+        # Mock user inputs: task ID, new title, new description, new priority (keep current), new tags (keep current), new due date (keep current)
+        inputs = iter([str(original_task.id), "Updated Title", "Updated Description", "", "", ""])  # Empty strings to keep current priority, tags, due date
 
         def mock_input(prompt):
             return next(inputs)
@@ -238,7 +238,8 @@ class TestCLIIntegration:
         cli = CLIInterface()
 
         # Mock user input to select exit option immediately
-        inputs = iter(["7"])  # Exit option
+        # Option 16 is exit, option 7 is "Set task priority" which requires additional input
+        inputs = iter(["16"])  # Exit option
 
         def mock_input(prompt):
             return next(inputs)

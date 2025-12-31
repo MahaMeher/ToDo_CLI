@@ -104,11 +104,14 @@ todo-app
 3. Choose recurrence pattern (daily, weekly, custom)
 4. The task will be configured as recurring
 
-### Setting Reminders
-1. Select option "16. Set task reminder"
-2. Enter the task ID to update
-3. Enter minutes before due date for reminder
-4. The task reminder will be configured
+### Checking Upcoming Tasks
+The application automatically identifies and highlights tasks that are due soon.
+When viewing all tasks, tasks approaching their due date will be marked accordingly.
+
+### Exiting the Application
+1. Select option "16. Exit"
+2. The application will terminate gracefully
+3. All data will be lost (in-memory storage)
 
 ## Features
 
@@ -137,11 +140,18 @@ todo-app
 ### Additional Features
 - In-memory storage (data is lost when application exits)
 - Graceful error handling for invalid inputs
-- Menu-driven console interface
+- Menu-driven console interface with 16 options
 - Input validation for all user inputs
 - Confirmation prompts for destructive operations
 - Visual indicators for task status and priority
 - Comprehensive logging and error reporting
+- Task reminders for upcoming due dates
+- Due soon task identification
+- Support for recurring tasks with automatic rescheduling
+- Tag-based task organization and filtering
+- Priority-based task organization and sorting
+- Advanced search and filter capabilities
+- Customizable sorting by multiple criteria
 
 ## Project Structure
 
@@ -167,10 +177,12 @@ src/
 │   └── main.py              # Application entry point
 ├── tests/
 │   ├── unit/
-│   │   └── test_organization_features.py # Tests for organization features
-│   ├── integration/
-│   ├── test_intelligent_features.py      # Unit tests for intelligent features
-│   └── test_intelligent_features_integration.py # Integration tests for intelligent features
+│   │   ├── __init__.py
+│   │   ├── test_organization_features.py # Tests for organization features
+│   │   └── test_intelligent_features.py  # Unit tests for intelligent features
+│   └── integration/
+│       ├── __init__.py
+│       └── test_intelligent_features_integration.py # Integration tests for intelligent features
 ├── specs/
 │   ├── 001-todo-intelligent-features/    # Specification for intelligent features
 │   │   ├── spec.md
@@ -202,7 +214,7 @@ src/
 
 ## Development
 
-To run tests:
+To run all tests:
 
 ```bash
 pytest tests/
@@ -213,6 +225,12 @@ To run specific test suites:
 ```bash
 pytest tests/unit/      # Unit tests
 pytest tests/integration/  # Integration tests
-pytest test_intelligent_features.py  # Intelligent features tests
-pytest test_intelligent_features_integration.py  # Intelligent features integration tests
+pytest tests/unit/test_intelligent_features.py  # Intelligent features unit tests
+pytest tests/integration/test_intelligent_features_integration.py  # Intelligent features integration tests
+```
+
+To run with coverage:
+
+```bash
+pytest --cov=src/todo_app tests/
 ```
